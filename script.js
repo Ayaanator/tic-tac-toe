@@ -1,26 +1,32 @@
 const cells = document.querySelectorAll('#board img');
 
 let current_player = 'O';
+let won = false;
 
 function board() {
-    return {
-        clear_board() {
-            cells.forEach((cell) => {
-                cell.src = "images/blank.png";
-            })
-        },
+    function clear_board() {
+        cells.forEach((cell) => {
+            cell.src = "images/blank.png";
+        })
+    }
 
-        change_player() {
-            if(current_player == 'O') {
-                current_player = 'X';
-            } else {
-                current_player = 'O';
-            }
-        }   
+    function change_player() {
+        if(current_player == 'O') {
+            current_player = 'X';
+        } else {
+            current_player = 'O';
+        }
+    }   
+
+    return {
+        clear_board,
+        change_player
     };
 }
 
-game_board = board();
+function player(player_tag) {
+
+}
 
 cells.forEach((cell, index) => {
   cell.addEventListener('click', () => {
@@ -28,6 +34,7 @@ cells.forEach((cell, index) => {
     cell.id = `cell-${index}`;
 
     if (!cell.src.includes('blank.png')) return;
+    if (won) return;
 
     // Change image
     if(current_player == 'O') {
@@ -40,3 +47,5 @@ cells.forEach((cell, index) => {
     console.log(`Cell ${index} clicked`);
   });
 });
+
+game_board = board();
