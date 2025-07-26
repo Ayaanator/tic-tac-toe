@@ -1,5 +1,8 @@
 const cells = document.querySelectorAll('#board img');
+const reset_button = document.querySelector("#reset");
+const winner_text = document.querySelector("#winner-text");
 
+game_board = board();
 let current_player = 'O';
 let won = false;
 
@@ -8,6 +11,8 @@ function board() {
         cells.forEach((cell) => {
             cell.src = "images/blank.png";
         })
+
+        winner_text.textContent = "";
     }
 
     function change_player() {
@@ -25,7 +30,13 @@ function board() {
 }
 
 function player(player_tag) {
+    let wins;
+    let turns;
 
+    return {
+        wins,
+        turns
+    }
 }
 
 cells.forEach((cell, index) => {
@@ -48,4 +59,4 @@ cells.forEach((cell, index) => {
   });
 });
 
-game_board = board();
+reset_button.addEventListener("click", game_board.clear_board);
