@@ -3,17 +3,32 @@ const reset_button = document.querySelector("#reset");
 const winner_text = document.querySelector("#winner-text");
 const current_player_display = document.querySelector("#current-player");
 
+player_o = player("o");
+player_x = player("x");
+
 game_board = board();
 let current_player = 'O';
 let won = false;
 
 function board() {
+    const win_patterns = [
+        [0, 1, 2], // Row 1
+        [3, 4, 5], // Row 2
+        [6, 7, 8], // Row 3
+        [0, 3, 6], // Col 1
+        [1, 4, 7], // Col 2
+        [2, 5, 8], // Col 3
+        [0, 4, 8], // Diagonal 1
+        [2, 4, 6]  // Diagonal 2
+    ];
+
     function clear_board() {
         cells.forEach((cell) => {
             cell.src = "images/blank.png";
         })
 
         winner_text.textContent = "";
+        won = false;
     }
 
     function change_player() {
@@ -42,6 +57,22 @@ function board() {
         }
     }
 
+    function check_win() {
+        for(let pattern of win_patterns) {
+            const [a, b, c] = pattern;
+
+            const valA = cells[a].getAttribute('src');
+            const valB = cells[b].getAttribute('src');
+            const valC = cells[c].getAttribute('src');
+
+            if(valA != "images/blank.png" && valA == valB && valB == valC) {
+                return valA.includes('o.png') ? 'O' : 'X';
+            }
+        }
+
+        return null;
+    }
+
     return {
         clear_board,
         change_player,
@@ -50,12 +81,15 @@ function board() {
 }
 
 function player(player_tag) {
-    let wins;
-    let turns;
+    let wins = 0;
+    let tag = player_tag;
+
+    const get_wins = () => wins;
+    const add_win = () => wins++;
 
     return {
-        wins,
-        turns
+        get_wins,
+        add_win
     }
 }
 
