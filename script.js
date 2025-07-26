@@ -26,9 +26,26 @@ function board() {
         }
     }   
 
+    function check_full() {
+        let blank = false;
+
+        cells.forEach(cell => {
+            if(cell.src.includes('blank.png')) {
+                blank = true;
+            }
+        })
+
+        if(blank === true) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     return {
         clear_board,
-        change_player
+        change_player,
+        check_full
     };
 }
 
