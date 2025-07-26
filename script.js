@@ -1,6 +1,7 @@
 const cells = document.querySelectorAll('#board img');
 const reset_button = document.querySelector("#reset");
 const winner_text = document.querySelector("#winner-text");
+const current_player_display = document.querySelector("#current-player");
 
 game_board = board();
 let current_player = 'O';
@@ -18,8 +19,10 @@ function board() {
     function change_player() {
         if(current_player == 'O') {
             current_player = 'X';
+            current_player_display.src = "images/x.png";
         } else {
             current_player = 'O';
+            current_player_display.src = "images/o.png";
         }
     }   
 
