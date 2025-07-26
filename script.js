@@ -3,6 +3,9 @@ const reset_button = document.querySelector("#reset");
 const winner_text = document.querySelector("#winner-text");
 const current_player_display = document.querySelector("#current-player");
 
+const o_score = document.querySelector("#o-score");
+const x_score = document.querySelector("#x-score");
+
 player_o = player("o");
 player_x = player("x");
 
@@ -76,13 +79,13 @@ function board() {
     return {
         clear_board,
         change_player,
-        check_full
+        check_full,
+        check_win
     };
 }
 
 function player(player_tag) {
     let wins = 0;
-    let tag = player_tag;
 
     const get_wins = () => wins;
     const add_win = () => wins++;
@@ -110,6 +113,20 @@ cells.forEach((cell, index) => {
 
     game_board.change_player();
     console.log(`Cell ${index} clicked`);
+    const winner = game_board.check_win();
+
+    if(winner) {
+        won = true;
+        winner_text.textContent = "Player " + winner + " wins!";
+        
+        if(winner == 'O') {
+            player_o.add_win();
+            o_score.textContent = "O: " + player_o.get_wins();
+        } else {
+            player_x.add_win();
+            x_score.textContent = "X: " + player_x.get_wins();
+        }
+    }
   });
 });
 
