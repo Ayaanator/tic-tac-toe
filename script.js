@@ -126,6 +126,8 @@ cells.forEach((cell, index) => {
             player_x.add_win();
             x_score.textContent = "X: " + player_x.get_wins();
         }
+    } else if(game_board.check_full()) {
+        winner_text.textContent = "Tie!";
     }
   });
 });
